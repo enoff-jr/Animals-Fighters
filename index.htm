@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +8,29 @@
     <title>Pelea de animales</title>
          <link rel="stylesheet" href="style.css">
          <link rel="stylesheet" href="./escenarios/style.css">
-       <link rel="shortcut icon" href="primer-icono.png" type="image/x-icon">
+         <link rel="stylesheet" href="./animaciones.css">
+       <link rel="shortcut icon" href="assets/primer-icono.png" type="image/x-icon">
       <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
   <header id="header">
-    <img src="assets/segundo-icono.png" class="icono">
+    <img src="assets/segundo-icono.png" class="icono" alt="Logo de Animals Fighters">
         <h1 class="titulo">ANIMALS FIGHT</h1>
         </header>
 
           <div class="output" id="battle-1">
             <img src="assets/tercer-icono.png" class="primer-pantalla">
-               <button class="boton boton-inicio" id="boton-star" type="button">Start -&gt;</button>
-               <p class="mensaje-star" id="star-1">Or press Enter key to start</p>
+               <button class="boton boton-inicio" id="boton-star" type="button">Empezar -&gt;</button>
+               <p class="mensaje-star" id="star-1">O presiona Enter para empezar</p>
           </div>
 
     <div class="modos-pantalla" id="modos" style="display: none;">
-      <h2 class="modos-titulo">SELECT GAME MODE</h2>
+      <h2 class="modos-titulo">Selecciona el modo de juego</h2>
          <div class="modos-contenedor">
-             <button class="boton" id="btn-rapida" type="button">⚔️ QUICK FIGHT</button>
+             <button class="boton" id="btn-rapida" type="button">⚔️ Pelea rápida</button>
              <br>
-          <button class="boton" id="btn-torneo" type="button">🏆 TOURNAMENT</button>
+          <button class="boton" id="btn-torneo" type="button">🏆 Torneo</button>
    </div>
 </div>
 
@@ -53,7 +54,7 @@
             </div>
           </div>
           <p class="descripcion-personaje">Fuerte y valiente. Mira cómo camina.</p>
-          <button class="boton boton-elegir" type="button" data-personaje="leon" aria-pressed="false">Elegir!</button>
+          <button class="boton boton-elegir" type="button" data-personaje="leon" aria-pressed="true">Elegir</button>
         </article>
         <article class="tarjeta-personaje">
           <h3>Velocirraptor</h3>
@@ -71,31 +72,29 @@
             </div>
           </div>
           <p class="descripcion-personaje">Ágil y veloz. Mira cómo se mueve.</p>
-          <button class="boton boton-elegir" type="button" data-personaje="velocirraptor" aria-pressed="false">Elegir!</button>
+          <button class="boton boton-elegir" type="button" data-personaje="velocirraptor" aria-pressed="false">Elegir</button>
         </article>
       </div>
-      <p class="estado-eleccion" id="estado-eleccion" aria-live="polite"></p>
+      <p class="estado-eleccion" id="estado-eleccion" aria-live="polite">¡Has elegido al León!</p>
            <div class="movimiento">
-              <button class="boton" onclick="mostrarPantalla(pantallaModos)"><- Volver</button>
-              <button class="boton" onclick="mostrarPantalla(pantallaDificultad)">Siguiente -></button>
+              <button class="boton" type="button" data-pantalla="modos">&lt;- Volver</button>
+              <button class="boton" type="button" data-pantalla="dificultad">Siguiente -&gt;</button>
          </div>
       </div>
 
       <div class="dificultad" id="dificultad" style="display: none;">
-        <h1>elije tu dificultad</h1>
-         <button class="boton boton-elegir" aria-pressed="false">Facil</button>
-         <button class="boton boton-elegir" aria-pressed="false">Normal</button>
-         <button class="boton boton-elegir" aria-pressed="false">Dificil</button>
-         <button class="boton boton-elegir" aria-pressed="false">Estrella ⭐️</button>
+        <h1>Elige la dificultad</h1>
+         <div class="dificultad-opciones" role="group" aria-label="Dificultad">
+           <button class="boton boton-dificultad" type="button" data-dificultad="facil" aria-pressed="false">Fácil</button>
+           <button class="boton boton-dificultad" type="button" data-dificultad="normal" aria-pressed="true">Normal</button>
+           <button class="boton boton-dificultad" type="button" data-dificultad="dificil" aria-pressed="false">Difícil</button>
+           <button class="boton boton-dificultad" type="button" data-dificultad="estrella" aria-pressed="false">Estrella ⭐️</button>
+         </div>
          <div class="movimiento">
-            <button class="boton" onclick="mostrarPantalla(pantallaPersonajes)"><- Volver</button>
-            <button class="boton" onclick="mostrarPantalla(pantallaEscenario)">Siguiente -></button>
+            <button class="boton" type="button" data-pantalla="seleccionpj">&lt;- Volver</button>
+            <button class="boton" type="button" data-pantalla="selector-escenarios">Siguiente -&gt;</button>
          </div>
       </div>
-
-          <div class="battle" id="battle-log">
-            <p id="mnsjInicial" >No hay movimiento todavia</p>
-          </div>
 
           <section
             class="selector-escenarios"
@@ -111,7 +110,7 @@
                 aria-labelledby="selector-escenarios-titulo"
               ></div>
               <p class="selector-escenarios__estado" id="estado-escenario" aria-live="polite"></p>
-              <button class="boton" id="boton-siguiente-escenario" type="button">Siguiente</button>
+              <button class="boton" id="boton-siguiente-escenario" type="button" aria-label="Siguiente">Siguiente</button>
             </div>
 
             <div class="pantalla-partida" id="pantalla-partida" hidden>
@@ -124,9 +123,10 @@
                 class="arena-combate"
                 id="arena-combate"
                 data-escenario="desierto"
-                role="img"
+                role="region"
                 aria-label="Arena de combate en el desierto con un león y un velocirraptor"
               >
+                <h1 class="cuenta-regresiva__texto" id="texto-cuenta-regresiva" aria-label="Tiempo restante">01:30</h1>
                 <div class="arena-cielo" aria-hidden="true">
                   <span class="arena-sol"></span>
                   <span class="arena-luna"></span>
@@ -190,15 +190,41 @@
                   </div>
                 </div>
               </div>
-              <p class="pantalla-partida__instruccion">¡Tu escenario está listo para la pelea!</p>
+
+              <section class="panel-combate" aria-label="Estado del combate">
+                <div class="estado-luchador">
+                  <span id="nombre-jugador">Jugador</span>
+                  <progress id="vida-jugador" max="100" value="100" aria-label="Vida del jugador"></progress>
+                  <span id="texto-vida-jugador">100 / 100</span>
+                </div>
+                <p id="estado-combate" aria-live="polite">Elige una acción para comenzar.</p>
+                <div class="estado-luchador">
+                  <span id="nombre-maquina">Rival</span>
+                  <progress id="vida-maquina" max="100" value="100" aria-label="Vida del rival"></progress>
+                  <span id="texto-vida-maquina">100 / 100</span>
+                </div>
+              </section>
+
+              <div class="controles-combate" aria-label="Acciones del combate">
+                <button class="boton" type="button" data-accion-combate="moverAtras">Retroceder</button>
+                <button class="boton" type="button" data-accion-combate="esquivar">Esquivar</button>
+                <button class="boton" type="button" data-accion-combate="saltar">Saltar</button>
+                <button class="boton" type="button" data-accion-combate="moverAdelante">Avanzar</button>
+                <button class="boton" type="button" data-accion-combate="atacar">Atacar</button>
+              </div>
+              <p class="ayuda-controles">Teclas: ←/→ avanzar o retroceder, ↑ saltar, espacio atacar, ↓ esquivar.</p>
+              <div class="battle" id="battle-log" role="log" aria-live="polite" aria-relevant="additions">
+                <p id="mnsjInicial">Todavía no hay movimientos.</p>
+              </div>
             </div>
           </section>
 
        <footer id="foot">© Creada por Diego Hernandez</footer>
 
         <script src="./js/animales.js"></script>
-          <script src="./js/dom.js"></script>
-       <script src="./js/logica.js"></script>
-       <script src="./escenarios/script.js"></script>
+        <script src="./js/animaciones.js"></script>
+        <script src="./js/dom.js"></script>
+        <script src="./js/logica.js"></script>
+        <script src="./js/script.js"></script>
     </body>
 </html>

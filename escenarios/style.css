@@ -669,32 +669,6 @@ display: none;
 }
 
 @media (max-width: 640px) {
-  body.escenarios-en-juego {
-    height: auto;
-    min-height: 100vh;
-    justify-content: flex-start;
-    overflow-y: auto;
-    padding: 18px 8px;
-  }
-
-  body.escenarios-en-juego > header,
-  body.escenarios-en-juego > footer {
-    display: none;
-  }
-
-  body.escenarios-en-juego > #selector-escenarios {
-    display: grid;
-    flex-shrink: 0;
-    width: 100%;
-    max-height: none;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
   .selector-escenarios {
     max-height: 40vh;
     padding: 10px;
@@ -749,33 +723,5 @@ display: none;
   .escenario-capa--estrella,
   .arena-hierba span {
     animation: none;
-  }
-}
-
-@media (min-width: 641px) {
-  body.escenarios-en-juego {
-    height: auto;
-    min-height: 100vh;
-    justify-content: flex-start;
-    overflow-y: auto;
-    padding: 18px 12px;
-  }
-
-  body.escenarios-en-juego > header,
-  body.escenarios-en-juego > footer {
-    display: none;
-  }
-
-  body.escenarios-en-juego > #selector-escenarios {
-    display: grid;
-    flex-shrink: 0;
-    width: 100%;
-    max-height: none;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
   }
 }

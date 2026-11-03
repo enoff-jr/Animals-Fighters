@@ -1,86 +1,85 @@
-const battleLog = document.getElementById("battle-log");
-const mensajeInicial = document.getElementById("mnsjInicial");
+const pantallas = new Map([
+    ["battle-1", document.getElementById("battle-1")],
+    ["modos", document.getElementById("modos")],
+    ["seleccionpj", document.getElementById("seleccionpj")],
+    ["dificultad", document.getElementById("dificultad")],
+    ["selector-escenarios", document.getElementById("selector-escenarios")],
+]);
+
 const botonInicio = document.getElementById("boton-star");
-const textoInicio = document.getElementById("star-1");
-const pantallaInicio = document.getElementById("battle-1");
-const pantallaModos = document.getElementById("modos");
-const pantallaPersonajes = document.getElementById("seleccionpj");
-const pantallaDificultad = document.getElementById("dificultad");
-const pantallaEscenario = document.getElementById("selector-escenarios");
-const pieDePagina = document.getElementById("foot");
-const encabezado = document.getElementById("header");
+const estadoEleccion = document.getElementById("estado-eleccion");
+const botonesPersonaje = [...document.querySelectorAll("[data-personaje]")];
+const botonesDificultad = [...document.querySelectorAll("[data-dificultad]")];
+const botonesNavegacion = [...document.querySelectorAll("[data-pantalla]")];
 
-function escribirTexto(texto) {
-    mensajeInicial.remove();
-    const mensaje = document.createElement("p");
-    mensaje.textContent = texto;
-    battleLog.appendChild(mensaje);
-}
+const configuracionJuego = {
+    personaje: "leon",
+    dificultad: "normal",
+};
 
-let cargando = false;
+function mostrarPantalla(idPantalla) {
+    const destino = pantallas.get(idPantalla);
 
-function mostrarPantalla(destino, tipodsp) {
-  if (cargando) return;
-  cargando = true;
-  botonInicio.disabled = true;
-  textoInicio.textContent = "░".repeat(16);
-  let progreso = 0;
-  const intervalo = setInterval(() => {
-    progreso++;
-    textoInicio.textContent = "█".repeat(progreso) + "░".repeat(16 - progreso);
-
-    if (progreso >= 16) {
-      clearInterval(intervalo);
-      pantallaInicio.style.display = "none";
-      pantallaModos.style.display = "none";
-      pantallaPersonajes.style.display = "none";
-      pantallaDificultad.style.display = "none";
-      pantallaEscenario.style.display = "none";
-      if (destino === pantallaEscenario) {
-        destino.style.display = "grid";
-      } else {
-        destino.style.display = "flex";
-      }
-      textoInicio.textContent = "Or press Enter key to start";
-      botonInicio.disabled = false;
-      cargando = false;
+    if (!destino) {
+        throw new Error(`No existe la pantalla "${idPantalla}".`);
     }
-  }, 50);
+
+    pantallas.forEach((pantalla) => {
+        pantalla.style.display = "none";
+    });
+
+    destino.style.display = idPantalla === "selector-escenarios" ? "grid" : "flex";
 }
 
-botonInicio.addEventListener("click", () => mostrarPantalla(pantallaModos));
+function seleccionarPersonaje(botonElegido) {
+    configuracionJuego.personaje = botonElegido.dataset.personaje;
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && pantallaInicio.style.display !== "none") {
-    event.preventDefault();
-    mostrarPantalla(pantallaModos);
-  }
+    botonesPersonaje.forEach((boton) => {
+        boton.setAttribute("aria-pressed", String(boton === botonElegido));
+    });
+
+    const animal = animalesBase[configuracionJuego.personaje];
+    estadoEleccion.textContent = `¡Has elegido al ${animal.nombre}!`;
+}
+
+function seleccionarDificultad(botonElegido) {
+    configuracionJuego.dificultad = botonElegido.dataset.dificultad;
+
+    botonesDificultad.forEach((boton) => {
+        boton.setAttribute("aria-pressed", String(boton === botonElegido));
+    });
+}
+
+botonInicio.addEventListener("click", () => mostrarPantalla("modos"));
+
+document.addEventListener("keydown", (evento) => {
+    const elementoActivo = evento.target;
+    const estaEscribiendo = elementoActivo instanceof HTMLElement &&
+        elementoActivo.closest("button, input, select, textarea, a");
+
+    if (evento.key === "Enter" && !estaEscribiendo && pantallas.get("battle-1").style.display !== "none") {
+        evento.preventDefault();
+        mostrarPantalla("modos");
+    }
 });
 
 document.querySelectorAll("#btn-rapida, #btn-torneo").forEach((boton) => {
-  boton.addEventListener("click", () => mostrarPantalla(pantallaPersonajes));
+    boton.addEventListener("click", () => mostrarPantalla("seleccionpj"));
 });
 
-document.querySelectorAll(".boton-elegir").forEach((boton) => {
-  boton.addEventListener("click", () => {
-    document.querySelectorAll(".boton-elegir").forEach((otroBoton) => {
-      otroBoton.setAttribute("aria-pressed", String(otroBoton === boton));
-    });
-
-    const personaje = boton.dataset.personaje;
-    const nombre = personaje === "leon" ? "León" : "Velocirraptor";
-    document.getElementById("estado-eleccion").textContent = `¡Has elegido al ${nombre}!`;
-  });
+botonesPersonaje.forEach((boton) => {
+    boton.addEventListener("click", () => seleccionarPersonaje(boton));
 });
 
-// Obtencion de las coordenadas del cursor
-document.addEventListener("pointermove", (event) => {
-  document.body.style.setProperty("--cursor-x", `${event.clientX}px`);
-  document.body.style.setProperty("--cursor-y", `${event.clientY}px`);
+botonesDificultad.forEach((boton) => {
+    boton.addEventListener("click", () => seleccionarDificultad(boton));
 });
 
-// Partes de la pagina esenciales por eso se bloquean
-if (pieDePagina.style.display === "none" || encabezado.style.display === "none") {
-  pieDePagina.style.display === "none"; 
-  encabezado.style.display === "none";
-}
+botonesNavegacion.forEach((boton) => {
+    boton.addEventListener("click", () => mostrarPantalla(boton.dataset.pantalla));
+});
+
+document.addEventListener("pointermove", (evento) => {
+    document.body.style.setProperty("--cursor-x", `${evento.clientX}px`);
+    document.body.style.setProperty("--cursor-y", `${evento.clientY}px`);
+});
