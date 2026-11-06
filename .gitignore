@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+# Note: analytics.bundle.js is committed for deployment
+
+# Environment files
+.env
+.env.local
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

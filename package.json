@@ -1,0 +1,24 @@
+{
+  "name": "animals-fighters",
+  "version": "1.0.0",
+  "description": "Animals Fight - A browser-based fighting game",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "esbuild js/analytics.js --bundle --outfile=js/analytics.bundle.js --format=iife",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "game",
+    "browser-game",
+    "animals"
+  ],
+  "author": "Diego Hernandez",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
